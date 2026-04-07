@@ -39,17 +39,17 @@
             <VBox styleClass="summary-card, card-income" HBox.hgrow="ALWAYS">
                 <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
                 <Label text="Total Income" styleClass="card-title"/>
-                <Label fx:id="totalIncomeLabel" text="$0.00" styleClass="card-value, value-income"/>
+                <Label fx:id="totalIncomeLabel" text="" styleClass="card-value, value-income"/>
             </VBox>
             <VBox styleClass="summary-card, card-expense" HBox.hgrow="ALWAYS">
                 <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
                 <Label text="Total Expenses" styleClass="card-title"/>
-                <Label fx:id="totalExpenseLabel" text="$0.00" styleClass="card-value, value-expense"/>
+                <Label fx:id="totalExpenseLabel" text="" styleClass="card-value, value-expense"/>
             </VBox>
             <VBox styleClass="summary-card, card-balance" HBox.hgrow="ALWAYS">
                 <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
                 <Label text="Net Balance" styleClass="card-title"/>
-                <Label fx:id="netBalanceLabel" text="$0.00" styleClass="card-value"/>
+                <Label fx:id="netBalanceLabel" text="" styleClass="card-value"/>
             </VBox>
             <VBox styleClass="summary-card, card-savings" HBox.hgrow="ALWAYS">
                 <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>

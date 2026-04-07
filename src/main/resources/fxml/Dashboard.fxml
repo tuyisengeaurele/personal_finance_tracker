@@ -28,7 +28,7 @@
             <VBox styleClass="summary-card, card-balance" HBox.hgrow="ALWAYS">
                 <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
                 <Label text="💰 Total Balance" styleClass="card-title"/>
-                <Label fx:id="balanceLabel" text="$0.00" styleClass="card-value"/>
+                <Label fx:id="balanceLabel" text="" styleClass="card-value"/>
                 <Label text="All-time net" styleClass="card-sub"/>
             </VBox>
 
@@ -36,7 +36,7 @@
             <VBox styleClass="summary-card, card-income" HBox.hgrow="ALWAYS">
                 <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
                 <Label text="📥 Monthly Income" styleClass="card-title"/>
-                <Label fx:id="monthIncomeLabel" text="$0.00" styleClass="card-value, value-income"/>
+                <Label fx:id="monthIncomeLabel" text="" styleClass="card-value, value-income"/>
                 <Label text="Current month" styleClass="card-sub"/>
             </VBox>
 
@@ -44,7 +44,7 @@
             <VBox styleClass="summary-card, card-expense" HBox.hgrow="ALWAYS">
                 <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
                 <Label text="📤 Monthly Expenses" styleClass="card-title"/>
-                <Label fx:id="monthExpenseLabel" text="$0.00" styleClass="card-value, value-expense"/>
+                <Label fx:id="monthExpenseLabel" text="" styleClass="card-value, value-expense"/>
                 <Label text="Current month" styleClass="card-sub"/>
             </VBox>
 
