@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane fitToWidth="true"
+            styleClass="view-scroll"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.financetracker.controller.ReportController">
+
+    <VBox styleClass="view-container" spacing="20">
+        <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <Label text="Reports" styleClass="page-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <ProgressIndicator fx:id="spinner" prefWidth="22" prefHeight="22" visible="false"/>
+            <Button text="↻  Refresh"       styleClass="btn-secondary" onAction="#onRefresh"/>
+            <Button text="📊  Export Excel" styleClass="btn-primary"   onAction="#onExportExcel"/>
+        </HBox>
+
+        <!-- Controls -->
+        <HBox styleClass="card" spacing="16" alignment="CENTER_LEFT">
+            <padding><Insets top="14" right="16" bottom="14" left="16"/></padding>
+            <Label text="Period:"/>
+            <DatePicker fx:id="fromDatePicker" prefWidth="140" promptText="From"/>
+            <Label text="to"/>
+            <DatePicker fx:id="toDatePicker"   prefWidth="140" promptText="To"/>
+            <Label text="Trend:"/>
+            <ComboBox fx:id="trendPeriodCombo" prefWidth="130"/>
+        </HBox>
+
+        <!-- Summary Cards -->
+        <HBox spacing="16">
+            <VBox styleClass="summary-card, card-income" HBox.hgrow="ALWAYS">
+                <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+                <Label text="Total Income" styleClass="card-title"/>
+                <Label fx:id="totalIncomeLabel" text="$0.00" styleClass="card-value, value-income"/>
+            </VBox>
+            <VBox styleClass="summary-card, card-expense" HBox.hgrow="ALWAYS">
+                <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+                <Label text="Total Expenses" styleClass="card-title"/>
+                <Label fx:id="totalExpenseLabel" text="$0.00" styleClass="card-value, value-expense"/>
+            </VBox>
+            <VBox styleClass="summary-card, card-balance" HBox.hgrow="ALWAYS">
+                <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+                <Label text="Net Balance" styleClass="card-title"/>
+                <Label fx:id="netBalanceLabel" text="$0.00" styleClass="card-value"/>
+            </VBox>
+            <VBox styleClass="summary-card, card-savings" HBox.hgrow="ALWAYS">
+                <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+                <Label text="Savings Rate" styleClass="card-title"/>
+                <Label fx:id="savingsRateLabel" text="0%" styleClass="card-value, value-income"/>
+            </VBox>
+        </HBox>
+
+        <!-- Charts Row -->
+        <HBox spacing="16">
+            <VBox styleClass="card" HBox.hgrow="ALWAYS">
+                <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+                <Label text="Income vs Expenses (Monthly)" styleClass="section-title"/>
+                <BarChart fx:id="barChart" prefHeight="300" animated="true"
+                          categoryGap="8">
+                    <xAxis><CategoryAxis fx:id="barXAxis" label="Month"/></xAxis>
+                    <yAxis><NumberAxis   fx:id="barYAxis"  label="Amount"/></yAxis>
+                </BarChart>
+            </VBox>
+
+            <VBox styleClass="card" prefWidth="300" minWidth="260">
+                <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+                <Label text="Expenses by Category" styleClass="section-title"/>
+                <PieChart fx:id="pieChart" prefHeight="300" animated="true" legendSide="BOTTOM"/>
+            </VBox>
+        </HBox>
+
+        <!-- Monthly Summary Table -->
+        <VBox styleClass="card" spacing="10">
+            <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+            <Label text="Monthly Summary" styleClass="section-title"/>
+            <TableView fx:id="summaryTable" prefHeight="220" styleClass="data-table">
+                <columns>
+                    <TableColumn fx:id="monthCol"   text="Month"    prefWidth="120"/>
+                    <TableColumn fx:id="incomeCol"  text="Income"   prefWidth="150"/>
+                    <TableColumn fx:id="expenseCol" text="Expenses" prefWidth="150"/>
+                    <TableColumn fx:id="balanceCol" text="Balance"  prefWidth="150"/>
+                </columns>
+                <placeholder><Label text="No data available" styleClass="table-placeholder"/></placeholder>
+            </TableView>
+        </VBox>
+    </VBox>
+</ScrollPane>
