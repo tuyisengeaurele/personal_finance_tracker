@@ -486,3 +486,31 @@
     -fx-background-radius: 8;
     -fx-padding: 6 10;
 }
+
+/* ── Tooltip ───────────────────────────────────────────────────────────────── */
+.tooltip {
+    -fx-background-color: #1e293b;
+    -fx-text-fill: #f1f5f9;
+    -fx-font-size: 12px;
+    -fx-background-radius: 6;
+    -fx-border-color: #334155;
+    -fx-border-radius: 6;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0, 0, 2);
+}
+
+/* ── Chart tooltip nodes ───────────────────────────────────────────────────── */
+.chart-symbol {
+    -fx-background-radius: 5;
+    -fx-padding: 5;
+}
+
+/* ── Notification/badge ─────────────────────────────────────────────────────── */
+.badge {
+    -fx-background-color: -fx-danger;
+    -fx-background-radius: 10;
+    -fx-text-fill: white;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 2 6;
+}
