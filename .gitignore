@@ -1,0 +1,58 @@
+# ─────────────────────────────────────────────
+#  Java + Maven .gitignore
+# ─────────────────────────────────────────────
+
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# IDE — IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# IDE — Eclipse
+.settings/
+.classpath
+.project
+.factorypath
+
+# IDE — VS Code
+.vscode/
+*.code-workspace
+
+# IDE — NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+
+# App data (runtime-generated)
+*.db
+*.db-shm
+*.db-wal
+*.log
+logs/
+
+# Build artifacts
+*.jar
+*.war
+*.ear
+*.class
+
+# Environment / secrets
+.env
+.env.*
+secrets.properties
