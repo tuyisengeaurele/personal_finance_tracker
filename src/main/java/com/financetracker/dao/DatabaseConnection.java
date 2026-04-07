@@ -12,71 +12,82 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Provides a thread-safe SQLite connection using a simple singleton pattern.
+ * Provides new SQLite JDBC connections on every call.
  *
- * The database file is stored in the user's home directory under
- * {@code ~/.financetracker/finance.db}, ensuring the app works
- * without elevated permissions on any OS.
+ * <h3>Why not a singleton connection?</h3>
+ * A single shared {@link Connection} object is not thread-safe: if a
+ * background {@link javafx.concurrent.Task} and the JavaFX Application
+ * Thread both call {@code getConnection()} at the same time they receive
+ * the <em>same</em> object. When one thread closes its
+ * {@code PreparedStatement} or {@code ResultSet}, the other thread's
+ * cursor can become invalid ("stmt pointer is closed").
+ *
+ * <p>SQLite in WAL mode ({@code PRAGMA journal_mode=WAL}) allows multiple
+ * concurrent readers, so opening a fresh connection per DAO call is both
+ * safe and efficient for a desktop application.
+ *
+ * <p>All callers use try-with-resources, so every connection is closed
+ * immediately after the query completes — no connection leak.
+ *
+ * <h3>Database location</h3>
+ * {@code ~/.financetracker/finance.db}
+ * Created automatically if it does not exist.
  */
-public class DatabaseConnection {
+public final class DatabaseConnection {
 
     private static final Logger log = LoggerFactory.getLogger(DatabaseConnection.class);
 
     private static final String DB_DIR_NAME  = ".financetracker";
     private static final String DB_FILE_NAME = "finance.db";
 
-    private static Connection instance;
+    /** Cached URL — the path never changes after the first call. */
+    private static volatile String jdbcUrl;
 
     private DatabaseConnection() {}
 
     /**
-     * Returns (and lazily creates) the singleton {@link Connection}.
+     * Opens and returns a brand-new SQLite connection with WAL mode and
+     * foreign-key support enabled.
      *
-     * @return an open SQLite JDBC connection
-     * @throws SQLException if the connection cannot be established
+     * <p><strong>Always call this inside a try-with-resources block</strong>
+     * so the connection is properly closed.
+     *
+     * @return an open, configured {@link Connection}
+     * @throws SQLException if the DB file cannot be created or opened
      */
-    public static synchronized Connection getConnection() throws SQLException {
-        if (instance == null || instance.isClosed()) {
-            instance = createConnection();
-        }
-        return instance;
-    }
-
-    private static Connection createConnection() throws SQLException {
-        Path dbDir  = Paths.get(System.getProperty("user.home"), DB_DIR_NAME);
-        Path dbFile = dbDir.resolve(DB_FILE_NAME);
-
-        try {
-            Files.createDirectories(dbDir);
-        } catch (IOException e) {
-            throw new SQLException("Cannot create database directory: " + dbDir, e);
-        }
-
-        String url = "jdbc:sqlite:" + dbFile.toAbsolutePath();
-        log.info("Connecting to SQLite database: {}", dbFile.toAbsolutePath());
-
+    public static Connection getConnection() throws SQLException {
+        String url = resolveUrl();
         Connection conn = DriverManager.getConnection(url);
-
-        // Enable WAL for better concurrent read performance
         try (var stmt = conn.createStatement()) {
             stmt.execute("PRAGMA journal_mode=WAL");
             stmt.execute("PRAGMA foreign_keys=ON");
+        } catch (SQLException e) {
+            conn.close();
+            throw e;
         }
-
         return conn;
     }
 
-    /** Closes the singleton connection (called on application shutdown). */
-    public static synchronized void close() {
-        if (instance != null) {
+    // -------------------------------------------------------------------------
+
+    private static String resolveUrl() throws SQLException {
+        if (jdbcUrl != null) return jdbcUrl;
+
+        synchronized (DatabaseConnection.class) {
+            if (jdbcUrl != null) return jdbcUrl;
+
+            Path dbDir  = Paths.get(System.getProperty("user.home"), DB_DIR_NAME);
+            Path dbFile = dbDir.resolve(DB_FILE_NAME);
+
             try {
-                instance.close();
-                log.info("Database connection closed.");
-            } catch (SQLException e) {
-                log.warn("Error closing database connection", e);
-            } finally {
-                instance = null;
+                Files.createDirectories(dbDir);
+            } catch (IOException e) {
+                throw new SQLException("Cannot create database directory: " + dbDir, e);
             }
+
+            jdbcUrl = "jdbc:sqlite:" + dbFile.toAbsolutePath();
+            log.info("SQLite database path: {}", dbFile.toAbsolutePath());
         }
+        return jdbcUrl;
     }
 }
