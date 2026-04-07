@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox styleClass="view-container"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.financetracker.controller.TransactionController"
+      spacing="16">
+
+    <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+
+    <!-- ===== HEADER ===== -->
+    <HBox alignment="CENTER_LEFT" spacing="12">
+        <Label text="Transactions" styleClass="page-title"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <ProgressIndicator fx:id="loadingSpinner" prefWidth="22" prefHeight="22" visible="false"/>
+        <Button text="➕  Add Transaction" styleClass="btn-primary"  onAction="#onAdd"/>
+        <Button fx:id="editButton"   text="✏️  Edit"   styleClass="btn-secondary" onAction="#onEdit"   disable="true"/>
+        <Button fx:id="deleteButton" text="🗑️  Delete" styleClass="btn-danger"    onAction="#onDelete" disable="true"/>
+    </HBox>
+
+    <!-- ===== FILTER BAR ===== -->
+    <VBox styleClass="card" spacing="12">
+        <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+        <Label text="🔍 Filters" styleClass="section-title"/>
+        <HBox spacing="12" alignment="CENTER_LEFT" wrap="true">
+            <TextField fx:id="searchField"
+                       promptText="Search description or category…"
+                       prefWidth="220"
+                       styleClass="search-field"/>
+            <ComboBox fx:id="typeFilter"       prefWidth="120" promptText="Type"/>
+            <ComboBox fx:id="categoryFilter"   prefWidth="160" promptText="Category"/>
+            <DatePicker fx:id="fromDatePicker" prefWidth="140" promptText="From date"/>
+            <DatePicker fx:id="toDatePicker"   prefWidth="140" promptText="To date"/>
+            <Button text="Clear" styleClass="btn-ghost" onAction="#onClearFilters"/>
+        </HBox>
+    </VBox>
+
+    <!-- ===== TRANSACTION TABLE ===== -->
+    <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="8">
+        <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+
+        <TableView fx:id="transactionTable"
+                   VBox.vgrow="ALWAYS"
+                   styleClass="data-table"
+                   tableMenuButtonVisible="true">
+            <columns>
+                <TableColumn fx:id="idCol"          text="#"           prefWidth="50"  sortable="true"/>
+                <TableColumn fx:id="dateCol"         text="Date"        prefWidth="110" sortable="true"/>
+                <TableColumn fx:id="typeCol"         text="Type"        prefWidth="90"  sortable="true"/>
+                <TableColumn fx:id="categoryCol"     text="Category"    prefWidth="130" sortable="true"/>
+                <TableColumn fx:id="amountCol"       text="Amount"      prefWidth="110" sortable="true"/>
+                <TableColumn fx:id="descCol"         text="Description" prefWidth="280"/>
+            </columns>
+            <placeholder>
+                <Label text="No transactions found. Add one to get started!" styleClass="table-placeholder"/>
+            </placeholder>
+        </TableView>
+
+        <!-- Footer actions -->
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <Label fx:id="statusLabel" text="" styleClass="status-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="⬇  Export CSV"   styleClass="btn-ghost" onAction="#onExportCSV"/>
+            <Button text="📊  Export Excel" styleClass="btn-ghost" onAction="#onExportExcel"/>
+        </HBox>
+    </VBox>
+</VBox>
