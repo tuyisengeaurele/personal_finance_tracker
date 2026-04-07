@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.financetracker.controller.MainController"
+            styleClass="root-pane">
+
+    <!-- ===== SIDEBAR ===== -->
+    <left>
+        <VBox styleClass="sidebar" minWidth="220" maxWidth="220">
+            <!-- App brand -->
+            <VBox styleClass="sidebar-brand" alignment="CENTER">
+                <padding><Insets top="24" bottom="24" left="16" right="16"/></padding>
+                <Label text="💰" styleClass="brand-icon"/>
+                <Label text="FinanceTracker" styleClass="brand-name"/>
+                <Label text="Personal Finance" styleClass="brand-sub"/>
+            </VBox>
+
+            <!-- Separator -->
+            <Separator styleClass="sidebar-sep"/>
+
+            <!-- Navigation -->
+            <VBox styleClass="nav-section" spacing="4" VBox.vgrow="ALWAYS">
+                <padding><Insets top="16" bottom="16" left="12" right="12"/></padding>
+
+                <Button fx:id="navDashboard"
+                        text="📊  Dashboard"
+                        maxWidth="Infinity"
+                        styleClass="nav-btn"
+                        onAction="#onDashboard"/>
+
+                <Button fx:id="navTransactions"
+                        text="💳  Transactions"
+                        maxWidth="Infinity"
+                        styleClass="nav-btn"
+                        onAction="#onTransactions"/>
+
+                <Button fx:id="navReports"
+                        text="📈  Reports"
+                        maxWidth="Infinity"
+                        styleClass="nav-btn"
+                        onAction="#onReports"/>
+
+                <Button fx:id="navSettings"
+                        text="⚙️  Settings"
+                        maxWidth="Infinity"
+                        styleClass="nav-btn"
+                        onAction="#onSettings"/>
+            </VBox>
+
+            <!-- Footer -->
+            <VBox styleClass="sidebar-footer" alignment="CENTER">
+                <padding><Insets top="12" bottom="16" left="16" right="16"/></padding>
+                <Separator styleClass="sidebar-sep"/>
+                <Label fx:id="appVersionLabel" styleClass="version-label" text="v1.0.0"/>
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- ===== CONTENT AREA ===== -->
+    <center>
+        <StackPane fx:id="contentPane" styleClass="content-area">
+            <!-- Views are loaded dynamically by MainController -->
+        </StackPane>
+    </center>
+</BorderPane>
