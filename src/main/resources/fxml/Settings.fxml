@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane fitToWidth="true"
+            styleClass="view-scroll"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.financetracker.controller.SettingsController">
+
+    <VBox styleClass="view-container" spacing="20">
+        <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+
+        <!-- Header -->
+        <Label text="Settings" styleClass="page-title"/>
+
+        <!-- ===== APPEARANCE ===== -->
+        <VBox styleClass="card" spacing="16">
+            <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+            <Label text="🎨 Appearance" styleClass="section-title"/>
+
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <Label text="Theme:" styleClass="form-label" prefWidth="120"/>
+                <ToggleButton fx:id="darkModeToggle" text="Dark Mode" styleClass="toggle-theme"/>
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <Label text="Currency:" styleClass="form-label" prefWidth="120"/>
+                <ComboBox fx:id="currencyCombo" prefWidth="160"/>
+            </HBox>
+        </VBox>
+
+        <!-- ===== BUDGETS ===== -->
+        <VBox styleClass="card" spacing="16">
+            <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+            <Label text="💰 Monthly Budgets" styleClass="section-title"/>
+
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <ComboBox fx:id="budgetCategoryCombo" prefWidth="180" promptText="Select category"/>
+                <TextField fx:id="budgetAmountField" prefWidth="130" promptText="Budget amount"/>
+                <Button text="Set Budget" styleClass="btn-primary" onAction="#onSaveBudget"/>
+            </HBox>
+
+            <TableView fx:id="budgetTable" prefHeight="200" styleClass="data-table">
+                <columns>
+                    <TableColumn fx:id="budgetCatCol"    text="Category" prefWidth="160"/>
+                    <TableColumn fx:id="budgetAmtCol"    text="Budget"   prefWidth="120"/>
+                    <TableColumn fx:id="budgetSpentCol"  text="Spent"    prefWidth="120"/>
+                    <TableColumn fx:id="budgetStatusCol" text="Status"   prefWidth="130"/>
+                </columns>
+                <placeholder><Label text="No budgets set for this month" styleClass="table-placeholder"/></placeholder>
+            </TableView>
+
+            <HBox alignment="CENTER_RIGHT">
+                <Button text="🗑️  Delete Selected" styleClass="btn-danger" onAction="#onDeleteBudget"/>
+            </HBox>
+        </VBox>
+
+        <!-- ===== CATEGORIES ===== -->
+        <VBox styleClass="card" spacing="16">
+            <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+            <Label text="🏷️ Categories" styleClass="section-title"/>
+
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <TextField fx:id="newCategoryName" prefWidth="180" promptText="Category name"/>
+                <ColorPicker fx:id="newCategoryColor" prefWidth="130"/>
+                <Button text="Add Category" styleClass="btn-primary" onAction="#onAddCategory"/>
+            </HBox>
+
+            <TableView fx:id="categoryTable" prefHeight="200" styleClass="data-table">
+                <columns>
+                    <TableColumn fx:id="catNameCol"  text="Name"  prefWidth="200"/>
+                    <TableColumn fx:id="catColorCol" text="Color" prefWidth="120"/>
+                </columns>
+                <placeholder><Label text="No categories found" styleClass="table-placeholder"/></placeholder>
+            </TableView>
+
+            <HBox alignment="CENTER_RIGHT">
+                <Button text="🗑️  Delete Selected" styleClass="btn-danger" onAction="#onDeleteCategory"/>
+            </HBox>
+        </VBox>
+
+        <!-- ===== ABOUT ===== -->
+        <VBox styleClass="card" spacing="8">
+            <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+            <Label text="ℹ️ About" styleClass="section-title"/>
+            <Label text="Personal Finance Tracker v1.0.0" styleClass="about-text"/>
+            <Label text="Built with Java 17 + JavaFX 21 + SQLite" styleClass="about-text"/>
+            <Label text="© 2024 Ange Aurele TUYISENGE" styleClass="about-text"/>
+        </VBox>
+    </VBox>
+</ScrollPane>
