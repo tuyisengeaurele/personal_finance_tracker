@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.financetracker.controller.TransactionDialogController"
+      styleClass="dialog-container"
+      spacing="20"
+      prefWidth="440">
+
+    <padding><Insets top="28" right="28" bottom="28" left="28"/></padding>
+
+    <!-- Title -->
+    <Label text="Transaction Details" styleClass="dialog-title"/>
+    <Separator/>
+
+    <!-- Type -->
+    <VBox spacing="8">
+        <Label text="Transaction Type" styleClass="form-label"/>
+        <HBox spacing="16">
+            <RadioButton fx:id="incomeRadio"  text="💚  Income"  selected="true" styleClass="radio-income">
+                <toggleGroup><ToggleGroup fx:id="typeGroup"/></toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="expenseRadio" text="❤  Expense" styleClass="radio-expense">
+                <toggleGroup><fx:reference source="typeGroup"/></toggleGroup>
+            </RadioButton>
+        </HBox>
+    </VBox>
+
+    <!-- Amount -->
+    <VBox spacing="6">
+        <Label text="Amount *" styleClass="form-label"/>
+        <TextField fx:id="amountField"
+                   promptText="0.00"
+                   styleClass="form-input"/>
+    </VBox>
+
+    <!-- Category -->
+    <VBox spacing="6">
+        <Label text="Category *" styleClass="form-label"/>
+        <ComboBox fx:id="categoryCombo"
+                  maxWidth="Infinity"
+                  promptText="Select category"
+                  styleClass="form-input"/>
+    </VBox>
+
+    <!-- Date -->
+    <VBox spacing="6">
+        <Label text="Date *" styleClass="form-label"/>
+        <DatePicker fx:id="datePicker"
+                    maxWidth="Infinity"
+                    styleClass="form-input"/>
+    </VBox>
+
+    <!-- Description -->
+    <VBox spacing="6">
+        <Label text="Description" styleClass="form-label"/>
+        <TextArea fx:id="descriptionArea"
+                  promptText="Optional notes…"
+                  prefRowCount="3"
+                  wrapText="true"
+                  styleClass="form-input"/>
+    </VBox>
+
+    <!-- Error message -->
+    <Label fx:id="errorLabel" styleClass="error-label" wrapText="true"/>
+
+    <!-- Buttons -->
+    <HBox spacing="12" alignment="CENTER_RIGHT">
+        <Button text="Cancel" styleClass="btn-ghost"   onAction="#onCancel"/>
+        <Button fx:id="saveButton" text="Save" styleClass="btn-primary" onAction="#onSave"
+                defaultButton="true"/>
+    </HBox>
+</VBox>
