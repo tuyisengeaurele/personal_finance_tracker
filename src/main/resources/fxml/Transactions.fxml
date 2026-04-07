@@ -26,7 +26,7 @@
     <VBox styleClass="card" spacing="12">
         <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
         <Label text="🔍 Filters" styleClass="section-title"/>
-        <HBox spacing="12" alignment="CENTER_LEFT" wrap="true">
+        <HBox spacing="12" alignment="CENTER_LEFT">
             <TextField fx:id="searchField"
                        promptText="Search description or category…"
                        prefWidth="220"
